@@ -46,7 +46,7 @@ public class AimAtTarget extends CommandBase {
             new Point2D.Double(165,1.05),//
             new Point2D.Double(195,1.05),
             new Point2D.Double(250,1.20),
-            //
+            ////
         };
     private static LinearInterpolationTable m_timeTable = new LinearInterpolationTable(m_shotTimes);
 
