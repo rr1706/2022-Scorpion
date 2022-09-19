@@ -5,7 +5,6 @@ import frc.robot.subsystems.Swerve.*;
 import frc.robot.Utilities.MathUtils;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
   /**
@@ -39,16 +38,19 @@ public class DriveByController extends CommandBase {
    */
   @Override
   public void execute() {
+
+  double speedLimit = DriveConstants.kMaxSpeedMetersPerSecond;
+
     m_robotDrive.drive(m_slewX.calculate(
         -inputTransform(m_controller.getLeftY()))
-            * DriveConstants.kMaxSpeedMetersPerSecond,
+            * speedLimit,
         m_slewY.calculate(
           -inputTransform(m_controller.getLeftX()))
-            * DriveConstants.kMaxSpeedMetersPerSecond,
+            * speedLimit,
         m_slewRot.calculate(-inputTransform(m_controller.getRightX()))
             * DriveConstants.kMaxAngularSpeed,
         fieldOrient,
-        true);
+        false);
 
   }
 
@@ -60,7 +62,8 @@ public class DriveByController extends CommandBase {
    * @return the transformed input value
    */
   private double inputTransform(double input){
-    return MathUtils.singedSquare(MathUtils.applyDeadband(input));
+    //return MathUtils.singedSquare(MathUtils.applyDeadband(input));
+    return MathUtils.cubicLinear(MathUtils.applyDeadband(input), 0.8, 0.2);
   }
 
 }
