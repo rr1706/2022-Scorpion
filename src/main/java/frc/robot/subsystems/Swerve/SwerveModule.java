@@ -15,7 +15,9 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.*;
+import frc.robot.Utilities.MathUtils;
 
   /**
    * Implements a swerve module for the Robot
@@ -121,6 +123,7 @@ public class SwerveModule {
     //Set the drive motor to the sum of the feedforward calculation and PID calculation
     final double finalDriveOutput = driveOutput+driveFF;
     m_driveMotor.set(finalDriveOutput);
+    SmartDashboard.putNumber("Output" + moduleID, finalDriveOutput);
     // Calculate the turning motor output from the turning PID controller.
     final double turnOutput = m_turningPIDController.calculate(getTurnEncoder(), state.angle.getRadians());
     //Set the turning motor to this output value

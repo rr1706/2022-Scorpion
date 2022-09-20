@@ -28,6 +28,11 @@ public class MathUtils {
     public static double singedSquare(double input) {
         return Math.signum(input) * Math.pow(input, 2);
     }
+
+    public static double cubicLinear(double input, double a, double b){
+      return (a*Math.pow(input, 3)+b*input);
+    }
+
     /**
     * Applies a simple deadband to input values between -1.0 and 1.0. Makes use of the deadband constants stored in the constants
     * class. Values below the innerDeadband will be set to zero. Values above the outerDeadband will be set to 1.0 or -1.0 depending

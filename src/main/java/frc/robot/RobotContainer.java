@@ -9,12 +9,26 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.GoalConstants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AimAtTarget;
+import frc.robot.Constants.ShooterConstants;
+import frc.robot.Utilities.JoystickAnalogButton;
+import frc.robot.Utilities.JoystickAnalogButton.Side;
 import frc.robot.commands.DriveByController;
+import frc.robot.commands.IndexElevator;
+import frc.robot.commands.RunIntake;
+import frc.robot.commands.SmartFeed;
+import frc.robot.commands.SmartShooter;
+import frc.robot.commands.ZeroHood;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.Swerve.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -31,9 +45,18 @@ public class RobotContainer {
   private final XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
 
   private final Drivetrain m_drive = new Drivetrain();
+  private final Intake m_intake = new Intake(IntakeConstants.kLeftMotorID, IntakeConstants.kLeftAirPorts, "Only");
+  private final Elevator m_elevator = new Elevator(ElevatorConstants.kLowMotorID, ElevatorConstants.kLowSensor, "Only");
+  private final Shooter m_shooter = new Shooter(ShooterConstants.kMotorIDs);
+  private final ShooterHood m_hood = new ShooterHood();
 
   private final DriveByController m_driveByController = new DriveByController(m_drive, m_driverController);
-  private final AimAtTarget m_aimAtHub = new AimAtTarget(m_drive, m_driverController, GoalConstants.kGoalLocation, true);
+  private final IndexElevator m_Index = new IndexElevator(m_elevator);
+  private final SmartShooter m_smartShooter = new SmartShooter(m_shooter, m_drive, m_hood, true, m_driverController);
+  private final RunIntake m_runIntake = new RunIntake(m_intake);
+  private final SmartFeed m_feed = new SmartFeed(m_elevator, m_drive, m_shooter, m_hood,m_operatorController);
+
+  private final Command m_test = new ZeroHood(m_hood);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -41,6 +64,9 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_drive.setDefaultCommand(m_driveByController);
+    m_elevator.setDefaultCommand(m_Index);
+    m_hood.setDefaultCommand(new RunCommand(() -> m_hood.run(1.0), m_hood));
+
   }
 
   /**
@@ -57,7 +83,9 @@ public class RobotContainer {
     
 
     new JoystickButton(m_driverController, Button.kY.value).whenPressed(()->m_drive.resetOdometry(new Pose2d(3.89,5.41, m_drive.getGyro().times(-1.0))));
-    new JoystickButton(m_driverController, Button.kA.value).whileHeld(m_aimAtHub);
+    new JoystickButton(m_driverController, Button.kA.value).whenHeld(m_smartShooter);
+    new JoystickAnalogButton(m_driverController, Side.kRight).whenHeld(m_runIntake);
+    new JoystickAnalogButton(m_driverController, Side.kLeft).whenHeld(m_feed);
 
   }
 
@@ -70,4 +98,9 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     return new WaitCommand(20.0);
   }
+
+  public Command getTest() {
+    return m_test;
+  }
+
 }

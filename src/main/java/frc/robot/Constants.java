@@ -34,25 +34,25 @@ public final class Constants {
    * Static method containing all Drivetrain constants 
    */
   public static final class DriveConstants {
-    public static final int kFrontLeftDriveMotorPort = 5;   //CANID of the Translation SparkMAX
+    public static final int kFrontLeftDriveMotorPort = 3;   //CANID of the Translation SparkMAX
     public static final int kFrontRightDriveMotorPort = 7;  //CANID of the Translation SparkMAX
-    public static final int kBackLeftDriveMotorPort = 3;    //CANID of the Translation SparkMAX
+    public static final int kBackLeftDriveMotorPort = 5;    //CANID of the Translation SparkMAX
     public static final int kBackRightDriveMotorPort = 1;   //CANID of the Translation SparkMAX
 
-    public static final int kFrontLeftTurningMotorPort = 6;   //CANID of the Rotation SparkMAX
+    public static final int kFrontLeftTurningMotorPort = 4;   //CANID of the Rotation SparkMAX
     public static final int kFrontRightTurningMotorPort = 8;  //CANID of the Rotation SparkMAX
-    public static final int kBackLeftTurningMotorPort = 4;    //CANID of the Rotation SparkMAX
-    public static final int kBackRightTurningMotorPort = 2;   //CANID of the Rotation SparkMAX
+    public static final int kBackLeftTurningMotorPort = 2;    //CANID of the Rotation SparkMAX
+    public static final int kBackRightTurningMotorPort = 6;   //CANID of the Rotation SparkMAX
 
-    public static final int kFrontLeftTurningEncoderPort = 2;   //Analog Port of the Module Absolute Encoder
-    public static final int kFrontRightTurningEncoderPort = 1;  //Analog Port of the Module Absolute Encoder
-    public static final int kBackLeftTurningEncoderPort = 3;    //Analog Port of the Module Absolute Encoder
-    public static final int kBackRightTurningEncoderPort = 0;   //Analog Port of the Module Absolute Encoder
+    public static final int kFrontLeftTurningEncoderPort = 1;   //Analog Port of the Module Absolute Encoder
+    public static final int kFrontRightTurningEncoderPort = 2;  //Analog Port of the Module Absolute Encoder
+    public static final int kBackLeftTurningEncoderPort = 0;    //Analog Port of the Module Absolute Encoder
+    public static final int kBackRightTurningEncoderPort = 3;   //Analog Port of the Module Absolute Encoder
 
-    public static final double kFrontLeftOffset = -3.813+2*Math.PI;  //Encoder Offset in Radians
-    public static final double kFrontRightOffset = -1.351+Math.PI;  //Encoder Offset in Radians
-    public static final double kBackLeftOffset = -2.711+Math.PI;   //Encoder Offset in Radians
-    public static final double kBackRightOffset = -3.715+Math.PI;  //Encoder Offset in Radians
+    public static final double kFrontLeftOffset = 2.5154;  //Encoder Offset in Radians
+    public static final double kFrontRightOffset = 0.2652;  //Encoder Offset in Radians
+    public static final double kBackLeftOffset = 0.4112;   //Encoder Offset in Radians
+    public static final double kBackRightOffset = -0.4668;  //Encoder Offset in Radians
 
     //Drive motor PID is best done on the roboRIO currently as the SparkMAX does not allow for static gain values on the PID controller, 
     //    these are necessary to have high accuracy when moving at extremely low RPMs
@@ -75,12 +75,12 @@ public final class Constants {
     public static final SwerveDriveKinematics kDriveKinematics 
       = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
 
-    public static final double kMaxAcceleration = 4.00;
-    public static final double kMaxSpeedMetersPerSecond = 3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
-    public static final double kMaxAngularSpeed = 4.00;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
-    public static final double kMaxAngularAccel = 8.00;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
+    public static final double kMaxAcceleration = 3.75;
+    public static final double kMaxSpeedMetersPerSecond = 3.75; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    public static final double kMaxAngularSpeed = Math.PI;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
+    public static final double kMaxAngularAccel = 2*Math.PI;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
 
-    public static final double kInnerDeadband = 0.10; //This value should exceed the maximum value the analog stick may read when not in use (Eliminates "Stick Drift")
+    public static final double kInnerDeadband = 0.08; //This value should exceed the maximum value the analog stick may read when not in use (Eliminates "Stick Drift")
     public static final double kOuterDeadband = 0.98; //This value should be lower than the analog stick X or Y reading when aimed at a 45deg angle (Such that X and Y are are maximized simultaneously)
   
     //Minimum allowable rotation command (in radians/s) assuming user input is squared using quadraticTransform, this value is always positive and should be compared agaisnt the absolute value of the drive command
@@ -119,8 +119,8 @@ public final class Constants {
    */
   public static final class GlobalConstants {
     public static final double kVoltCompensation = 12.6;        //Sets a voltage compensation value ideally 12.6V
-    public static final int PCHID = 20;
-    public static final int PDHID = 24;
+    public static final int PCMID = 50;
+    public static final int PDPID = 51;
     public static final double kLoopTime = 0.020;
   }
   /**
@@ -136,22 +136,22 @@ public final class Constants {
    * Static method containing all Intake constants 
    */
   public static final class IntakeConstants {
-    public static final int kLeftMotorID = 8;
-    public static final int kRightMotorID = 5;
-    public static final int[] kLeftAirPorts = {3,2};
-    public static final int[] kRightAirPorts = {1,0};
-    public static final double []kPIDF = {0.00005,0,0,0.000091};
+    public static final int kLeftMotorID = 30;
+    //public static final int kRightMotorID = 5;
+    public static final int[] kLeftAirPorts = {1,0};
+    //public static final int[] kRightAirPorts = {1,0};
+    //public static final double []kPIDF = {0.00005,0,0,0.000091};
   }
 
   public static final class ElevatorConstants {
-    public static final int kLowMotorID = 17;
-    public static final int kHighMotorID = 16;
-    public static final double []kPIDF = {0.000075,0,0,0.000091};
-    public static final int kLowSensor = 10;
-    public static final int kHighSensor = 11;
+    public static final int kLowMotorID = 31;
+    //public static final int kHighMotorID = 16;
+    //public static final double []kPIDF = {0.000075,0,0,0.000091};
+    public static final int kLowSensor = 0;
+    //public static final int kHighSensor = 11;
   }
 
-  public static final class TurretConstants {
+/*   public static final class TurretConstants {
     public static final int kTurretPort = 14;                    //CANID of the turret motor controller
     public static final int kTurretPotentiometerPort = 4;       //Analog port of the turret analog potentiometer
     public static final double kTurretTolerance = 2*0.0349;    //allowable angle error in radians for the PIDSubsystem to report atSetpoint() to true
@@ -159,77 +159,97 @@ public final class Constants {
     public static final double kStaticGain = 0.025;             //Limits Integral term so as to not wind up values when making larger moves
     public static final double kTurretLow = 0.50;               //Minimum angle in radians allowed (defines the turret deadzone)
     public static final double kTurretHigh = 5.78;              //Maximum angle in radians allowed (defines the turret deadzone)
-  }
+  } */
 
   public static final class ClimberConstants {
     public static final int[] kMotorID = {15,9};
-    public static final int[] kValvePorts = {4,5};
+    //public static final int[] kValvePorts = {4,5};
   }
 
   public static final class HoodConstants{
-    public static final int kMotorID = 11;
-    public static final double kHoodTolerance = 5.0;
+    public static final int kMotorID = 22;
+    public static final double kTolerance = 3.0;
+    public static final double kMaxAngle = 39.0;
+    public static final double kMinAngle = 0.5;
+    public static final double kPosConvFactor = 1.27777777778;
+
+    public static final double kP = 0.20;
+    public static final double kMaxNegPower = -0.33;
+    public static final double kMaxPosPower = 1.0;
   }
 
   /**
    * Static method containing all Shooter constants 
    */
   public static final class ShooterConstants {
-    public static final int[] kMotorIDs = {12,13};        //CANID of the Motor Controller for the Sooter Motor
-    public static final double kShotRPMTolerance = 200.0;          //RPMs of error allowed before a ball can be fed into t he shooter
-    public static final double[] kPID = { 0.00005, 0.0003, 0 };         //Defines PID values for the shooter 0.00045
-    public static final double kShooterFF = 0.018;            //Defines shooter FeedForward Value, should be roughly equal to 1/MaxMotorRPM * MaxRPMVoltage / Compensation Voltage
-    public static final double kStaticGain = 0.0001635;
-    public static final double kAccelCompFactor = 0.100; //in units of seconds
+    public static final int[] kMotorIDs = {20,21};        //CANID of the Motor Controller for the Sooter Motor
+    public static final double kRPMTolerance = 100.0;          //RPMs of error allowed before a ball can be fed into t he shooter
+    public static final double[] kPID = { 0.0001, 0.0005, 0 }; // Defines PID values for the shooter 0.00045
+    public static final double kIntRange = 0.015;
+    public static final double kStatic = 0.018;
+    public static final double kFF = 0.00016;
+    public static final double kAccelCompFactor = 0.100; // in units of seconds
+    public static final double kMaxRPM = 3600.0;
+    public static final double kMaxNegPower = -0.30;
 
 
-    private static final Point2D[] khoodPoints = 
-        new Point2D.Double[]{
-            //(ty-angle,distance)
-            new Point2D.Double(25,0.0),
-            new Point2D.Double(35,0.0),
-            new Point2D.Double(75,10.0),//
-            new Point2D.Double(90,15.5),//
-            new Point2D.Double(105,18.4),//
-            new Point2D.Double(120,23.0),//
-            new Point2D.Double(135,26.0),//
-            new Point2D.Double(150,28.0),//
-            new Point2D.Double(165,30.5),//
-            new Point2D.Double(180,32.0),//
-            new Point2D.Double(195,36.0),//
-            new Point2D.Double(210,37.0),//
-            new Point2D.Double(225,38.0)//
-        };
-    public static final LinearInterpolationTable khoodTable = new LinearInterpolationTable(khoodPoints);
 
-    private static final Point2D[] krpmPoints = 
-        new Point2D.Double[]{
-            //(ty-angle,distance)
-            new Point2D.Double(25,1500),
-            new Point2D.Double(35,1500),
-            new Point2D.Double(75,2350),//
-            new Point2D.Double(90,2460),//
-            new Point2D.Double(105,2515),//
-            new Point2D.Double(120,2620),//
-            new Point2D.Double(135,2715),//
-            new Point2D.Double(150,2815),//
-            new Point2D.Double(165,2900),//
-            new Point2D.Double(180,3050),//
-            new Point2D.Double(195,3195),//
-            new Point2D.Double(210,3315),//
-            new Point2D.Double(225,3450),//
-            new Point2D.Double(350,3730)
-        };
+    private static final Point2D[] kHoodPoints = new Point2D.Double[] {
+      // (ty-angle,distance)
+      new Point2D.Double(35, 0.0),
+      new Point2D.Double(55, 0.0),
+      new Point2D.Double(89, 7.90), //
+      new Point2D.Double(105, 13.5), //
+      new Point2D.Double(130, 18.5), //
+      new Point2D.Double(155, 22.0), //
+      new Point2D.Double(180, 25.5), //
+      new Point2D.Double(205, 28.5), //
+      new Point2D.Double(230, 34.1), //
+      new Point2D.Double(260, 35.7), //
+      new Point2D.Double(300, 39.0)
+  };
 
-    public static final LinearInterpolationTable krpmTable = new LinearInterpolationTable(krpmPoints);
+    public static final LinearInterpolationTable khoodTable = new LinearInterpolationTable(kHoodPoints);
+
+    private static final Point2D[] kRPMPoints = new Point2D.Double[] {
+      // (ty-angle,distance)
+      new Point2D.Double(35, 1700),
+      new Point2D.Double(55, 2060),
+      new Point2D.Double(89, 2240), //
+      new Point2D.Double(105, 2310), //
+      new Point2D.Double(130, 2340), //
+      new Point2D.Double(155, 2434), //
+      new Point2D.Double(180, 2540), //
+      new Point2D.Double(205, 2730), //
+      new Point2D.Double(230, 2860), //
+      new Point2D.Double(260, 3050), //
+      new Point2D.Double(300, 3320)
+
+  };
+
+    public static final LinearInterpolationTable krpmTable = new LinearInterpolationTable(kRPMPoints);
+
+    private static final Point2D[] kShotTimes = new Point2D.Double[] {
+      // (ty-angle,time)
+      new Point2D.Double(80, 0.78+0.10),
+      new Point2D.Double(130, 0.80+0.10),
+      new Point2D.Double(190, 0.81+0.10),
+      new Point2D.Double(240, 0.82+0.10),
+      new Point2D.Double(280, 0.83+0.10)
+  };
+
+  public static final LinearInterpolationTable kTimeTable = new LinearInterpolationTable(kShotTimes);
+
   }
+
+
   
     /**
    * Static method containing all Autonomous constants 
    */
   public static final class AutoConstants {
     public static final double kMaxAcceleration = 2.50;
-    public static final double kMaxSpeed = 3.25; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    public static final double kMaxSpeed = 3.5; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
     public static final double kMaxAngularSpeed = Math.PI;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
     public static final double kMaxAngularAccel = Math.PI;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
 

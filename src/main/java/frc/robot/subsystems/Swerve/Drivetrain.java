@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.Constants.*;
 import frc.robot.Utilities.FieldRelativeAccel;
-import frc.robot.Utilities.FieldRelativeJerk;
 import frc.robot.Utilities.FieldRelativeSpeed;
 
   /**
@@ -38,11 +37,11 @@ import frc.robot.Utilities.FieldRelativeSpeed;
   private double timeSinceDrive = 0.0;  //Double to store the time since last translation command
   private double lastDriveTime = 0.0;   //Double to store the time of the last translation command
 
+  private boolean m_readyToShoot = false;
+
   private FieldRelativeSpeed m_fieldRelVel = new FieldRelativeSpeed();
   private FieldRelativeSpeed m_lastFieldRelVel = new FieldRelativeSpeed();
-  private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();;
-  private FieldRelativeAccel m_lastFieldRelAccel = new FieldRelativeAccel();
-  private FieldRelativeJerk m_fieldRelJerk = new FieldRelativeJerk();
+  private FieldRelativeAccel m_fieldRelAccel = new FieldRelativeAccel();
 
   private final Timer keepAngleTimer = new Timer(); //Creates timer used in the perform keep angle function
 
@@ -71,6 +70,8 @@ import frc.robot.Utilities.FieldRelativeSpeed;
 
   //Creates Odometry object to store the pose of the robot
   private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, ahrs.getRotation2d());
+
+  private final SwerveDriveOdometry m_autoOdometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, ahrs.getRotation2d());
 
     /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
@@ -116,8 +117,8 @@ import frc.robot.Utilities.FieldRelativeSpeed;
   public void periodic(){
       m_fieldRelVel = new FieldRelativeSpeed(getChassisSpeed(), getGyro());
       m_fieldRelAccel = new FieldRelativeAccel(m_fieldRelVel, m_lastFieldRelVel, GlobalConstants.kLoopTime);
-      m_fieldRelJerk = new FieldRelativeJerk(m_fieldRelAccel, m_lastFieldRelAccel, GlobalConstants.kLoopTime);
-      m_lastFieldRelAccel = m_fieldRelAccel;
+      //m_fieldRelJerk = new FieldRelativeJerk(m_fieldRelAccel, m_lastFieldRelAccel, GlobalConstants.kLoopTime);
+      //m_lastFieldRelAccel = m_fieldRelAccel;
       m_lastFieldRelVel = m_fieldRelVel;
 
       SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
@@ -169,6 +170,11 @@ import frc.robot.Utilities.FieldRelativeSpeed;
         m_backRight.getState());
   }
 
+  public void updateAutoOdometry() {
+    m_autoOdometry.update(ahrs.getRotation2d(), m_frontLeft.getState(), m_frontRight.getState(), m_backLeft.getState(),
+        m_backRight.getState());
+  }
+
   /**
    * Function to retrieve latest robot gyro angle.
    * @return Rotation2d object containing Gyro angle
@@ -185,10 +191,6 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     return m_fieldRelAccel;
   }
 
-  public FieldRelativeJerk getFieldRelativeJerk(){
-    return m_fieldRelJerk;
-  }
-
     /**
    * Function created to retreieve and push the robot pose to the SmartDashboard for diagnostics
    * @return Pose2d object containing the X and Y position and the heading of the robot.
@@ -201,6 +203,15 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     SmartDashboard.putNumber("Robot Y", position.getY());
     SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
     return m_odometry.getPoseMeters();
+  }
+
+  public Pose2d getAutoPose() {
+    updateAutoOdometry();
+    Pose2d pose = m_autoOdometry.getPoseMeters();
+    Translation2d position = pose.getTranslation();
+    SmartDashboard.putNumber("Auto X", position.getX());
+    SmartDashboard.putNumber("Auto Y", position.getY());
+    return m_autoOdometry.getPoseMeters();
   }
 
   /**
@@ -274,6 +285,14 @@ import frc.robot.Utilities.FieldRelativeSpeed;
 
   public void updateKeepAngle(){
     keepAngle = getGyro().getRadians();
+  }
+
+  public void setReadytoShoot(){
+    m_readyToShoot = true;
+  }
+
+  public boolean isReadyToShoot(){
+    return m_readyToShoot;
   }
 
 }

@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -9,42 +13,31 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants.CurrentLimit;
 import frc.robot.Constants.GlobalConstants;
 import frc.robot.Constants.IntakeConstants;
 
+import static edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 public class Intake extends SubsystemBase {
-    
-    private final CANSparkMax m_motor;
-    private final RelativeEncoder m_encoder;
-    private final SparkMaxPIDController m_PID;
+    private final VictorSPX m_motor;
     private final DoubleSolenoid m_actuator;
     private final String m_ID;
 
     public Intake(int motorCANID, int[] airChannels, String ID) {
         m_ID = ID;
-        m_motor = new CANSparkMax(motorCANID, MotorType.kBrushless);
-        m_encoder = m_motor.getEncoder();
-        m_PID = m_motor.getPIDController();
-        m_actuator = new DoubleSolenoid(GlobalConstants.PCHID, PneumaticsModuleType.CTREPCM, airChannels[0],
+        m_motor = new VictorSPX(30);
+        m_actuator = new DoubleSolenoid(GlobalConstants.PCMID, PneumaticsModuleType.CTREPCM, airChannels[0],
                 airChannels[1]);
 
-        m_motor.setSmartCurrentLimit(CurrentLimit.kIntake);
-        m_motor.enableVoltageCompensation(GlobalConstants.kVoltCompensation);
-        m_motor.setIdleMode(IdleMode.kCoast);
-        m_PID.setOutputRange(-1.0, 1.0);
-        m_PID.setP(IntakeConstants.kPIDF[0]);
-        m_PID.setFF(IntakeConstants.kPIDF[3]);
-        m_motor.burnFlash();
+        m_motor.setNeutralMode(NeutralMode.Coast);
 
     }
 
-    public void run(double rpm) {
-        m_PID.setReference(rpm, ControlType.kVelocity);
+    public void run(double power) {
+        m_motor.set(ControlMode.PercentOutput, power);
     }
 
     public void extend() {
@@ -56,11 +49,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void stop() {
-        m_motor.stopMotor();
-    }
-
-    public double getCurrent() {
-        return m_motor.getOutputCurrent();
+        m_motor.set(ControlMode.PercentOutput, 0.0);;
     }
 
     public String getID() {
