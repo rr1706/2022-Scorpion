@@ -187,7 +187,7 @@ public final class Constants {
     public static final double[] kPID = { 0.0001, 0.0005, 0 }; // Defines PID values for the shooter 0.00045
     public static final double kIntRange = 0.015;
     public static final double kStatic = 0.018;
-    public static final double kFF = 0.00016;
+    public static final double kFF = 0.000163;
     public static final double kAccelCompFactor = 0.100; // in units of seconds
     public static final double kMaxRPM = 3600.0;
     public static final double kMaxNegPower = -0.30;

@@ -9,6 +9,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.GoalConstants;
 import frc.robot.Constants.IntakeConstants;
@@ -22,6 +24,9 @@ import frc.robot.commands.RunIntake;
 import frc.robot.commands.SmartFeed;
 import frc.robot.commands.SmartShooter;
 import frc.robot.commands.ZeroHood;
+import frc.robot.commands.Autos.fiveball;
+import frc.robot.commands.Autos.oneball;
+import frc.robot.commands.Autos.twoball;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -57,11 +62,18 @@ public class RobotContainer {
   private final SmartFeed m_feed = new SmartFeed(m_elevator, m_drive, m_shooter, m_hood,m_operatorController);
 
   private final Command m_test = new ZeroHood(m_hood);
+  private final Command m_autoFive = new fiveball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
+  private final Command m_autoTwo = new twoball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
+  private final Command m_autoOne = new oneball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
+  private final Command doNothin = new WaitCommand(20.0);
+
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    configureAutoChooser();
 
     m_drive.setDefaultCommand(m_driveByController);
     m_elevator.setDefaultCommand(m_Index);
@@ -89,6 +101,17 @@ public class RobotContainer {
 
   }
 
+
+  private void configureAutoChooser(){
+    m_chooser.addOption("Auto2Ball", m_autoTwo);
+    m_chooser.addOption("Auto1Ball", m_autoOne);
+    m_chooser.addOption("Auto5Ball", m_autoFive);
+    m_chooser.addOption("Do Nothing", doNothin);
+    
+    m_chooser.setDefaultOption("Do Nothing", doNothin);
+    SmartDashboard.putData(m_chooser);  
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -96,7 +119,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return new WaitCommand(20.0);
+    return m_chooser.getSelected();
   }
 
   public Command getTest() {
