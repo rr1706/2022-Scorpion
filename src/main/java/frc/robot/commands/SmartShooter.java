@@ -146,7 +146,7 @@ public class SmartShooter extends CommandBase {
     double currentAngle = MathUtils.toUnitCircAngle(m_drive.getGyro().getRadians());
     double pidOutput = m_rotPID.calculate(currentAngle,targetAngle);
 
-    if(Math.abs(currentAngle-targetAngle)<=0.10){
+    if(Math.abs(currentAngle-targetAngle)<=0.15){
         m_drive.setReadytoShoot();
     }
 

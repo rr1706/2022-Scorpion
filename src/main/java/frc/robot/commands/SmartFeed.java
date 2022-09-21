@@ -57,7 +57,7 @@ public class SmartFeed extends CommandBase {
 
         double currentTime = m_timer.get();
         boolean isOmegaLow = Math.abs(m_drive.getFieldRelativeSpeed().omega) < Math.PI / 3.0;
-        boolean isAlphaLow = Math.abs(m_drive.getFieldRelativeAccel().alpha) <= 1.00;
+        boolean isAlphaLow = true;//Math.abs(m_drive.getFieldRelativeAccel().alpha) <= 2.00;
         boolean isDriveReady = m_drive.isReadyToShoot();
         boolean isShooterReady = m_shooter.atSetpoint();
         boolean isHoodReady = m_hood.atSetpoint();

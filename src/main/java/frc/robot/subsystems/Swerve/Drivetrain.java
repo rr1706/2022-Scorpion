@@ -71,6 +71,8 @@ import frc.robot.Utilities.FieldRelativeSpeed;
   //Creates Odometry object to store the pose of the robot
   private final SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, ahrs.getRotation2d());
 
+  private final SwerveDriveOdometry m_autoOdometry = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, ahrs.getRotation2d());
+
     /**
    * Constructs a Drivetrain and resets the Gyro and Keep Angle parameters
    */
@@ -168,6 +170,11 @@ import frc.robot.Utilities.FieldRelativeSpeed;
         m_backRight.getState());
   }
 
+  public void updateAutoOdometry() {
+    m_autoOdometry.update(ahrs.getRotation2d(), m_frontLeft.getState(), m_frontRight.getState(), m_backLeft.getState(),
+        m_backRight.getState());
+  }
+
   /**
    * Function to retrieve latest robot gyro angle.
    * @return Rotation2d object containing Gyro angle
@@ -198,6 +205,15 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     return m_odometry.getPoseMeters();
   }
 
+  public Pose2d getAutoPose() {
+    updateAutoOdometry();
+    Pose2d pose = m_autoOdometry.getPoseMeters();
+    Translation2d position = pose.getTranslation();
+    SmartDashboard.putNumber("Auto X", position.getX());
+    SmartDashboard.putNumber("Auto Y", position.getY());
+    return m_autoOdometry.getPoseMeters();
+  }
+
   /**
    * Resets the odometry and gyro to the specified pose.
    *
@@ -208,6 +224,7 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     ahrs.setAngleAdjustment(pose.getRotation().getDegrees());
     keepAngle = getGyro().getRadians();
     m_odometry.resetPosition(pose, ahrs.getRotation2d().times(-1.0));
+    m_autoOdometry.resetPosition(pose, ahrs.getRotation2d().times(-1.0));
   }
 
   public void setPose(Pose2d pose){
