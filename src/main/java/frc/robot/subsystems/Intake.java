@@ -49,7 +49,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void stop() {
-        m_motor.set(ControlMode.PercentOutput, 0.0);;
+        m_motor.set(ControlMode.PercentOutput, 0.0);
     }
 
     public String getID() {

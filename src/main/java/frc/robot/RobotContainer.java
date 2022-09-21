@@ -86,6 +86,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kA.value).whenHeld(m_smartShooter);
     new JoystickAnalogButton(m_driverController, Side.kRight).whenHeld(m_runIntake);
     new JoystickAnalogButton(m_driverController, Side.kLeft).whenHeld(m_feed);
+    new JoystickButton(m_driverController, Button.kX.value).whenHeld(m_feed);
 
   }
 
