@@ -32,10 +32,10 @@ public class fiveball extends SequentialCommandGroup {
             new InstantCommand(() -> drive.resetOdometry(fiveballone.getInitialPose())),
             
             fiveballone.raceWith(new RunIntake(intake)),
-            shoot1.raceWith(new WaitCommand(0.5).andThen(feed1.alongWith(new WaitCommand(1.0).andThen(new RunIntake(intake).withTimeout(0.25))).withTimeout(2.0))),
+            shoot1.raceWith(new WaitCommand(0.50).andThen(feed1.alongWith(new WaitCommand(0.60).andThen(new RunIntake(intake).withTimeout(0.30))).withTimeout(2.0))),
             fiveballtwo.raceWith(new IndexElevator(top)).andThen(new WaitCommand(1.0)).raceWith(new RunIntake(intake)),                    
             fiveballthree.raceWith(new IndexElevator(top)),
-            shoot2.raceWith(new WaitCommand(0.5).andThen(feed2.withTimeout(5.0)))
+            shoot2.raceWith(new WaitCommand(0.60).andThen(feed2.withTimeout(5.0)))
         
         );
 

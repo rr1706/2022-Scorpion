@@ -75,9 +75,9 @@ public class SmartShooter extends CommandBase {
 
         double currentTime = m_timer.get();
 
-        SmartDashboard.putNumber("Current Time", currentTime);
+        //SmartDashboard.putNumber("Current Time", currentTime);
 
-        SmartDashboard.putBoolean("Shooter Running", true);
+        //SmartDashboard.putBoolean("Shooter Running", true);
 
         FieldRelativeSpeed robotVel = m_drive.getFieldRelativeSpeed();
         FieldRelativeAccel robotAccel = m_drive.getFieldRelativeAccel();
@@ -87,12 +87,12 @@ public class SmartShooter extends CommandBase {
         Translation2d robotToGoal = target.minus(m_drive.getPose().getTranslation());
         double dist = robotToGoal.getDistance(new Translation2d()) * 39.37;
 
-        SmartDashboard.putNumber("Calculated (in)", dist);
+        //SmartDashboard.putNumber("Calculated (in)", dist);
 
         //double fixedShotTime = m_timeTable.getOutput(dist);
         double shotTime = m_timeTable.getOutput(dist);
 
-        SmartDashboard.putNumber("Fixed Time", shotTime);
+        //SmartDashboard.putNumber("Fixed Time", shotTime);
 
         Translation2d movingGoalLocation = new Translation2d();
 
@@ -103,8 +103,8 @@ public class SmartShooter extends CommandBase {
             double virtualGoalY = target.getY()
                     - shotTime * (robotVel.vy + robotAccel.ay * ShooterConstants.kAccelCompFactor);
 
-            SmartDashboard.putNumber("Goal X", virtualGoalX);
-            SmartDashboard.putNumber("Goal Y", virtualGoalY);
+            //SmartDashboard.putNumber("Goal X", virtualGoalX);
+            //SmartDashboard.putNumber("Goal Y", virtualGoalY);
 
             Translation2d testGoalLocation = new Translation2d(virtualGoalX, virtualGoalY);
 
@@ -118,7 +118,7 @@ public class SmartShooter extends CommandBase {
             
             if(i == 4){
                 movingGoalLocation = testGoalLocation;
-                SmartDashboard.putNumber("NewShotTime", newShotTime);
+                //SmartDashboard.putNumber("NewShotTime", newShotTime);
             }
             else{
                 shotTime = newShotTime;
@@ -157,9 +157,9 @@ public class SmartShooter extends CommandBase {
         pidOutput = -DriveConstants.kMaxAngularSpeed;
     }
 
-    SmartDashboard.putNumber("Target Angle", targetAngle);
-    SmartDashboard.putNumber("Current Angle", currentAngle);
-    SmartDashboard.putNumber("PID Output", pidOutput);
+    //SmartDashboard.putNumber("Target Angle", targetAngle);
+    //SmartDashboard.putNumber("Current Angle", currentAngle);
+    //SmartDashboard.putNumber("PID Output", pidOutput);
 
     m_drive.drive(
     -m_slewX.calculate(inputTransform(m_driver.getLeftY()))
@@ -187,7 +187,7 @@ public class SmartShooter extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("Shooter Running", false);
+        //SmartDashboard.putBoolean("Shooter Running", false);
         m_shooter.stop();
         m_hood.stop();
         m_timer.stop();

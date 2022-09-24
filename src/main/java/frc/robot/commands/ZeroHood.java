@@ -25,7 +25,7 @@ public class ZeroHood extends CommandBase {
 
     @Override
     public void execute() {
-        SmartDashboard.putBoolean("Zeroing Hood", true);
+        //SmartDashboard.putBoolean("Zeroing Hood", true);
         double time = m_timer.get();
         double current = m_hood.getTotalCurrent();
         if (current > 19.5 && time > 0.040) {
@@ -37,7 +37,7 @@ public class ZeroHood extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        SmartDashboard.putBoolean("Zeroing Hood", false);
+        //SmartDashboard.putBoolean("Zeroing Hood", false);
         m_timer.stop();
     }
 

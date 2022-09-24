@@ -26,7 +26,7 @@ public class IndexElevator extends CommandBase {
 
         if (m_top.getSensor()) {
             m_top.stop();
-            SmartDashboard.putBoolean("top index", true);
+            //SmartDashboard.putBoolean("top index", true);
 
         } else{
             m_top.run(0.90);

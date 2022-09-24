@@ -187,7 +187,7 @@ public final class Constants {
     public static final double[] kPID = { 0.0001, 0.0005, 0 }; // Defines PID values for the shooter 0.00045
     public static final double kIntRange = 0.015;
     public static final double kStatic = 0.018;
-    public static final double kFF = 0.000163;
+    public static final double kFF = 0.000162;
     public static final double kAccelCompFactor = 0.100; // in units of seconds
     public static final double kMaxRPM = 3600.0;
     public static final double kMaxNegPower = -0.30;
@@ -202,7 +202,7 @@ public final class Constants {
       new Point2D.Double(105, 13.5), //
       new Point2D.Double(130, 18.5), //
       new Point2D.Double(155, 22.0), //
-      new Point2D.Double(180, 25.5), //
+      new Point2D.Double(180, 25.0), //
       new Point2D.Double(205, 28.5), //
       new Point2D.Double(230, 34.1), //
       new Point2D.Double(260, 35.7), //
@@ -218,7 +218,7 @@ public final class Constants {
       new Point2D.Double(89, 2240), //
       new Point2D.Double(105, 2310), //
       new Point2D.Double(130, 2340), //
-      new Point2D.Double(155, 2434), //
+      new Point2D.Double(155, 2450), //
       new Point2D.Double(180, 2540), //
       new Point2D.Double(205, 2730), //
       new Point2D.Double(230, 2860), //

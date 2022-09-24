@@ -85,7 +85,7 @@ public class Limelight {
         final double tx = tx()*180.0/Math.PI;
         final double tyAdj = (ty() -0.009742*tx*tx)/(0.00036*tx*tx+1.0); //New geometric correction function
         final double distance = distTable.getOutput(tyAdj);
-        SmartDashboard.putNumber("Limelight ty", ty());
+        //SmartDashboard.putNumber("Limelight ty", ty());
         // SmartDashboard.putNumber("LimelightDistance", distance);
         return distance;
     }

@@ -99,9 +99,9 @@ import frc.robot.Utilities.FieldRelativeSpeed;
       rot = performKeepAngle(xSpeed,ySpeed,rot); //Calls the keep angle function to update the keep angle or rotate depending on driver input
     }
     
-    SmartDashboard.putNumber("xSpeed Commanded", xSpeed);
-    SmartDashboard.putNumber("ySpeed Commanded", ySpeed);
-    SmartDashboard.putNumber("rot Commanded", rot);
+    //SmartDashboard.putNumber("xSpeed Commanded", xSpeed);
+    //SmartDashboard.putNumber("ySpeed Commanded", ySpeed);
+    //SmartDashboard.putNumber("rot Commanded", rot);
 
     //creates an array of the desired swerve module states based on driver command and if the commands are field relative or not
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
@@ -121,9 +121,9 @@ import frc.robot.Utilities.FieldRelativeSpeed;
       //m_lastFieldRelAccel = m_fieldRelAccel;
       m_lastFieldRelVel = m_fieldRelVel;
 
-      SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
-      SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
-      SmartDashboard.putNumber("RobotOmega", getChassisSpeed().omegaRadiansPerSecond);
+      //SmartDashboard.putNumber("RobotSpeedX", getChassisSpeed().vxMetersPerSecond);
+      //SmartDashboard.putNumber("RobotSpeedY", getChassisSpeed().vyMetersPerSecond);
+      //SmartDashboard.putNumber("RobotOmega", getChassisSpeed().omegaRadiansPerSecond);
 
       //SmartDashboard.putNumber("Accel X", m_fieldRelAccel.ax);
       //SmartDashboard.putNumber("Accel Y", m_fieldRelAccel.ay);
@@ -199,9 +199,9 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     Pose2d pose = m_odometry.getPoseMeters();
     Translation2d position = pose.getTranslation();
     //Rotation2d heading = getGyro();
-    SmartDashboard.putNumber("Robot X", position.getX());
-    SmartDashboard.putNumber("Robot Y", position.getY());
-    SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
+    //SmartDashboard.putNumber("Robot X", position.getX());
+    //SmartDashboard.putNumber("Robot Y", position.getY());
+    //SmartDashboard.putNumber("Robot Gyro", getGyro().getRadians());
     return m_odometry.getPoseMeters();
   }
 
@@ -209,8 +209,8 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     updateAutoOdometry();
     Pose2d pose = m_autoOdometry.getPoseMeters();
     Translation2d position = pose.getTranslation();
-    SmartDashboard.putNumber("Auto X", position.getX());
-    SmartDashboard.putNumber("Auto Y", position.getY());
+    //SmartDashboard.putNumber("Auto X", position.getX());
+    //SmartDashboard.putNumber("Auto Y", position.getY());
     return m_autoOdometry.getPoseMeters();
   }
 

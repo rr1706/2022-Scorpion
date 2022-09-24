@@ -68,7 +68,7 @@ public class SmartFeed extends CommandBase {
 
         boolean[] array = { isOmegaLow, isAlphaLow, isDriveReady, isShooterReady, isHoodReady };
 
-        SmartDashboard.putBooleanArray("Booleans", array);
+        //SmartDashboard.putBooleanArray("Booleans", array);
 
         boolean canShoot = isOmegaLow && isAlphaLow && isDriveReady && isShooterReady && isHoodReady && isClose;
         if (canShoot) {
@@ -81,7 +81,7 @@ public class SmartFeed extends CommandBase {
             }
         }
 
-        SmartDashboard.putBoolean("Shooting", true);
+        //SmartDashboard.putBoolean("Shooting", true);
 
     }
 
@@ -89,7 +89,7 @@ public class SmartFeed extends CommandBase {
     public void end(boolean interrupted) {
         m_timer.stop();
         m_top.stop();
-        SmartDashboard.putBoolean("Shooting", false);
+        //SmartDashboard.putBoolean("Shooting", false);
         m_operator.setRumble(RumbleType.kLeftRumble, 0.0);
         m_operator.setRumble(RumbleType.kRightRumble, 0.0);
     }

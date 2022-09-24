@@ -49,7 +49,7 @@ public class ShooterHood extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Current Hood Angle", getHoodAngle());
+        //SmartDashboard.putNumber("Current Hood Angle", getHoodAngle());
 
     }
 
