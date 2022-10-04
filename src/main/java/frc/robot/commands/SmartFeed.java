@@ -71,15 +71,8 @@ public class SmartFeed extends CommandBase {
         //SmartDashboard.putBooleanArray("Booleans", array);
 
         boolean canShoot = isOmegaLow && isAlphaLow && isDriveReady && isShooterReady && isHoodReady && isClose;
-        if (canShoot) {
             m_top.run(0.90);
-        } else {
-            if (m_top.getSensor()) {
-                m_top.stop();
-            } else {
-                m_top.run(0.90);
-            }
-        }
+
 
         //SmartDashboard.putBoolean("Shooting", true);
 
