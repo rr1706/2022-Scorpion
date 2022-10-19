@@ -21,6 +21,7 @@ import frc.robot.Utilities.JoystickAnalogButton.Side;
 import frc.robot.commands.DriveByController;
 import frc.robot.commands.IndexElevator;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.SimpleShooter;
 import frc.robot.commands.SmartFeed;
 import frc.robot.commands.SmartShooter;
 import frc.robot.commands.ZeroHood;
@@ -55,13 +56,21 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter(ShooterConstants.kMotorIDs);
   private final ShooterHood m_hood = new ShooterHood();
 
-  private final DriveByController m_driveByController = new DriveByController(m_drive, m_driverController);
+  private final DriveByController m_driveByController 
+    = new DriveByController(m_drive, m_driverController);
   private final IndexElevator m_Index = new IndexElevator(m_elevator);
   private final SmartShooter m_smartShooter = new SmartShooter(m_shooter, m_drive, m_hood, true, m_driverController);
   private final RunIntake m_runIntake = new RunIntake(m_intake);
   private final SmartFeed m_feed = new SmartFeed(m_elevator, m_drive, m_shooter, m_hood,m_operatorController);
 
-  private final Command m_test = new ZeroHood(m_hood);
+  private final SimpleShooter m_lowShoot = new SimpleShooter(m_shooter, m_hood, 1300, 25.0);
+  private final SimpleShooter m_medShoot = new SimpleShooter(m_shooter, m_hood, 1800, 30.0);
+  private final SimpleShooter m_highShoot = new SimpleShooter(m_shooter, m_hood, 3000, 35.0);
+  private final SimpleShooter m_ultraShoot = new SimpleShooter(m_shooter, m_hood, 3800, 39.0);
+
+
+  private final Command m_test = new ZeroHood(m_hood, m_elevator);
+
   private final Command m_autoFive = new fiveball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
   private final Command m_autoTwo = new twoball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
   private final Command m_autoOne = new oneball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
@@ -94,11 +103,18 @@ public class RobotContainer {
 
     
 
-    new JoystickButton(m_driverController, Button.kY.value).whenPressed(()->m_drive.resetOdometry(new Pose2d(3.89,5.41, m_drive.getGyro().times(-1.0))));
+    //new JoystickButton(m_driverController, Button.kY.value).whenPressed(()->m_drive.resetOdometry(new Pose2d(3.89,5.41, m_drive.getGyro().times(-1.0))));
+    new JoystickButton(m_driverController, Button.kX.value).whenHeld(m_lowShoot);
+    new JoystickButton(m_driverController, Button.kY.value).whenHeld(m_medShoot);
+    new JoystickButton(m_driverController, Button.kB.value).whenHeld(m_highShoot);
+    new JoystickButton(m_driverController, Button.kRightBumper.value).whenHeld(m_ultraShoot);
     new JoystickButton(m_driverController, Button.kA.value).whenHeld(m_smartShooter);
+
+
+
     new JoystickAnalogButton(m_driverController, Side.kRight).whenHeld(m_runIntake);
     new JoystickAnalogButton(m_driverController, Side.kLeft).whenHeld(m_feed);
-    new JoystickButton(m_driverController, Button.kX.value).whenHeld(m_feed);
+   // new JoystickButton(m_driverController, Button.kX.value).whenHeld(m_feed);
 
   }
 

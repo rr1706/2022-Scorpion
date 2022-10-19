@@ -29,7 +29,7 @@ public class IndexElevator extends CommandBase {
             //SmartDashboard.putBoolean("top index", true);
 
         } else{
-            m_top.run(0.90);
+            m_top.run(0.75);
         }
     }
 

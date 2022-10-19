@@ -21,6 +21,8 @@ public class SmartFeed extends CommandBase {
     private final Timer m_timer = new Timer();
     private boolean m_End = false;
     private double m_shotDistLimiter = 320;
+    private double m_shotTime = 0.0;
+    private boolean m_hasShot = false;
 
     public SmartFeed(Elevator top, Drivetrain drive, Shooter shooter, ShooterHood hood,
             XboxController operator) {
@@ -49,7 +51,8 @@ public class SmartFeed extends CommandBase {
         m_End = false;
         m_timer.reset();
         m_timer.start();
-
+        m_shotTime = 0.0;
+        m_hasShot = false;
     }
 
     @Override
@@ -70,8 +73,20 @@ public class SmartFeed extends CommandBase {
 
         //SmartDashboard.putBooleanArray("Booleans", array);
 
-        boolean canShoot = isOmegaLow && isAlphaLow && isDriveReady && isShooterReady && isHoodReady && isClose;
-            m_top.run(0.90);
+        // if(!m_hasShot){
+            m_top.run(0.56);
+/*             m_hasShot = true;
+            m_shotTime = currentTime;
+        }
+        else if(m_hasShot && (currentTime - m_shotTime) < 0.100){
+            m_top.run(0.5);
+        }
+        else if(m_hasShot && (currentTime - m_shotTime) >= 0.250){
+            m_hasShot = false;
+        }
+        else if(m_hasShot && (currentTime - m_shotTime) >= 0.100){
+            m_top.stop();
+        } */
 
 
         //SmartDashboard.putBoolean("Shooting", true);

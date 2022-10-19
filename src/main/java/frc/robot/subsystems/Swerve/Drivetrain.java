@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.*;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -38,6 +39,10 @@ import frc.robot.Utilities.FieldRelativeSpeed;
   private double lastDriveTime = 0.0;   //Double to store the time of the last translation command
 
   private boolean m_readyToShoot = false;
+
+  private final SlewRateLimiter m_slewX = new SlewRateLimiter(8.0);
+  private final SlewRateLimiter m_slewY = new SlewRateLimiter(8.0);
+  private final SlewRateLimiter m_slewRot = new SlewRateLimiter(10.0);
 
   private FieldRelativeSpeed m_fieldRelVel = new FieldRelativeSpeed();
   private FieldRelativeSpeed m_lastFieldRelVel = new FieldRelativeSpeed();
@@ -98,6 +103,10 @@ import frc.robot.Utilities.FieldRelativeSpeed;
     if(keepAngle){
       rot = performKeepAngle(xSpeed,ySpeed,rot); //Calls the keep angle function to update the keep angle or rotate depending on driver input
     }
+
+    xSpeed = m_slewX.calculate(xSpeed);
+    ySpeed = m_slewY.calculate(ySpeed);
+    rot = m_slewRot.calculate(rot);
     
     //SmartDashboard.putNumber("xSpeed Commanded", xSpeed);
     //SmartDashboard.putNumber("ySpeed Commanded", ySpeed);

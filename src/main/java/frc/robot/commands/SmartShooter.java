@@ -24,16 +24,13 @@ import frc.robot.subsystems.ShooterHood;
 
 public class SmartShooter extends CommandBase {
     private final PIDController m_rotPID 
-    = new PIDController(3.0, 0, 0.0);
+    = new PIDController(3.50, 0.0, 0.25);
     private final Shooter m_shooter;
     private final Drivetrain m_drive;
     private final ShooterHood m_hood;
     private final boolean m_updatePose;
     private final XboxController m_driver;
     private final Timer m_timer = new Timer();
-
-            private final SlewRateLimiter m_slewX = new SlewRateLimiter(2.5);
-        private final SlewRateLimiter m_slewY = new SlewRateLimiter(2.5);
 
     private static LinearInterpolationTable m_timeTable = ShooterConstants.kTimeTable;
     private static LinearInterpolationTable m_hoodTable = ShooterConstants.khoodTable;
@@ -47,6 +44,7 @@ public class SmartShooter extends CommandBase {
         m_updatePose = updatePose;
         m_driver = driver;
         m_rotPID.enableContinuousInput(0, 2*Math.PI);
+        //m_rotPID.setIntegratorRange(-0.25, 0.25);
         addRequirements(shooter, hood, drive);
     }
 
@@ -56,7 +54,9 @@ public class SmartShooter extends CommandBase {
         m_hood = hood;
         m_updatePose = updatePose;
         m_driver = new XboxController(4);
-        m_rotPID.enableContinuousInput(0, 2*Math.PI);
+
+        //m_rotPID.enableContinuousInput(0, 2*Math.PI);
+        //m_rotPID.setIntegratorRange(-0.1, 0.1);
         addRequirements(shooter, hood, drive);
     }
 
@@ -68,6 +68,12 @@ public class SmartShooter extends CommandBase {
         SmartDashboard.putNumber("SetShotAdjust", 0);
         SmartDashboard.putBoolean("Adjust Shot?", false);
         Limelight.enable();
+
+        //FieldRelativeSpeed speed = m_drive.getFieldRelativeSpeed();
+        //FieldRelativeAccel accel = m_drive.getFieldRelativeAccel();
+    
+        //m_slewX.reset(speed.vx+accel.ax*ShooterConstants.kAccelCompFactor);
+        //m_slewY.reset(speed.vy+accel.ay*ShooterConstants.kAccelCompFactor);
     }
 
     @Override
@@ -144,6 +150,9 @@ public class SmartShooter extends CommandBase {
 
     double targetAngle = Math.atan2(robotToMovingGoal.getY(),robotToMovingGoal.getX());
     double currentAngle = MathUtils.toUnitCircAngle(m_drive.getGyro().getRadians());
+
+    SmartDashboard.putNumber("Angular ERROR", currentAngle-targetAngle);
+
     double pidOutput = m_rotPID.calculate(currentAngle,targetAngle);
 
     if(Math.abs(currentAngle-targetAngle)<=0.15){
@@ -157,16 +166,20 @@ public class SmartShooter extends CommandBase {
         pidOutput = -DriveConstants.kMaxAngularSpeed;
     }
 
+    SmartDashboard.putNumber("SMart ROT", pidOutput);
+
+    double adjTranslation = ((DriveConstants.kMaxAngularSpeed-Math.abs(pidOutput))/DriveConstants.kMaxAngularSpeed)*0.60;
+
     //SmartDashboard.putNumber("Target Angle", targetAngle);
     //SmartDashboard.putNumber("Current Angle", currentAngle);
     //SmartDashboard.putNumber("PID Output", pidOutput);
 
     m_drive.drive(
-    -m_slewX.calculate(inputTransform(m_driver.getLeftY()))
-        * DriveConstants.kMaxSpeedMetersPerSecond/3.0,
-      -m_slewY.calculate(inputTransform(m_driver.getLeftX()))
-        * DriveConstants.kMaxSpeedMetersPerSecond/3.0,
-        pidOutput,
+    -(inputTransform(m_driver.getLeftY())
+        * DriveConstants.kMaxSpeedMetersPerSecond*adjTranslation),
+      -(inputTransform(m_driver.getLeftX())
+        * DriveConstants.kMaxSpeedMetersPerSecond*adjTranslation),
+        (pidOutput),
     true,
     false);
 

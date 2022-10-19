@@ -3,16 +3,19 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.ShooterHood;
 
 public class ZeroHood extends CommandBase {
-    private ShooterHood m_hood;
-    private Timer m_timer = new Timer();
+    private final ShooterHood m_hood;
+    private final Elevator m_elevator;
+    private final Timer m_timer = new Timer();
     private boolean m_finished = false;
 
-    public ZeroHood(ShooterHood hood) {
+    public ZeroHood(ShooterHood hood, Elevator elevator) {
         m_hood = hood;
-        addRequirements(m_hood);
+        m_elevator = elevator;
+        addRequirements(m_hood, m_elevator);
     }
 
     @Override

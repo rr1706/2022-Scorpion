@@ -76,7 +76,7 @@ public final class Constants {
       = new SwerveDriveKinematics(kFrontLeftLocation,kFrontRightLocation,kBackLeftLocation,kBackRightLocation);
 
     public static final double kMaxAcceleration = 3.75;
-    public static final double kMaxSpeedMetersPerSecond = 3.75; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
+    public static final double kMaxSpeedMetersPerSecond = 3.25; //Maximum Sustainable Drivetrain Speed under Normal Conditions & Battery, Robot will not exceed this speed in closed loop control
     public static final double kMaxAngularSpeed = Math.PI;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
     public static final double kMaxAngularAccel = 2*Math.PI;      //Maximum Angular Speed desired. NOTE: Robot can exceed this but spinning fast is not particularly useful or driver friendly
 
@@ -189,7 +189,7 @@ public final class Constants {
     public static final double kStatic = 0.018;
     public static final double kFF = 0.000162;
     public static final double kAccelCompFactor = 0.100; // in units of seconds
-    public static final double kMaxRPM = 3600.0;
+    public static final double kMaxRPM = 3800.0;
     public static final double kMaxNegPower = -0.30;
 
 
@@ -200,9 +200,9 @@ public final class Constants {
       new Point2D.Double(55, 0.0),
       new Point2D.Double(89, 7.90), //
       new Point2D.Double(105, 13.5), //
-      new Point2D.Double(130, 18.5), //
-      new Point2D.Double(155, 22.0), //
-      new Point2D.Double(180, 25.0), //
+      new Point2D.Double(130, 17.5), //
+      new Point2D.Double(155, 21.0), //
+      new Point2D.Double(180, 24.0), //
       new Point2D.Double(205, 28.5), //
       new Point2D.Double(230, 34.1), //
       new Point2D.Double(260, 35.7), //
@@ -218,8 +218,8 @@ public final class Constants {
       new Point2D.Double(89, 2240), //
       new Point2D.Double(105, 2310), //
       new Point2D.Double(130, 2340), //
-      new Point2D.Double(155, 2450), //
-      new Point2D.Double(180, 2540), //
+      new Point2D.Double(155, 2465), //
+      new Point2D.Double(180, 2575), //
       new Point2D.Double(205, 2730), //
       new Point2D.Double(230, 2860), //
       new Point2D.Double(260, 3050), //
