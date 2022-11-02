@@ -64,9 +64,7 @@ public class SmartShooter extends CommandBase {
     public void initialize() {
         m_timer.reset();
         m_timer.start();
-        SmartDashboard.putNumber("SetHoodAdjust", 0.0);
-        SmartDashboard.putNumber("SetShotAdjust", 0);
-        SmartDashboard.putBoolean("Adjust Shot?", false);
+
         Limelight.enable();
 
         //FieldRelativeSpeed speed = m_drive.getFieldRelativeSpeed();
@@ -136,14 +134,9 @@ public class SmartShooter extends CommandBase {
 
         SmartDashboard.putNumber("NewDist", newDist);
 
-        if (SmartDashboard.getBoolean("Adjust Shot?", false)) {
-            m_shooter.run(m_rpmTable.getOutput(newDist) + SmartDashboard.getNumber("SetShotAdjust", 0));
-            m_hood.run(m_hoodTable.getOutput(newDist) + SmartDashboard.getNumber("SetHoodAdjust", 0));
-        } else {
-            m_shooter.run(m_rpmTable.getOutput(newDist));
-            m_hood.run(m_hoodTable.getOutput(newDist));
+        m_shooter.run(m_rpmTable.getOutput(newDist));
+        m_hood.run(m_hoodTable.getOutput(newDist));
 
-        }
 
     Translation2d robotToMovingGoal = movingGoalLocation.minus(m_drive.getPose().getTranslation());
 
@@ -168,7 +161,7 @@ public class SmartShooter extends CommandBase {
 
     SmartDashboard.putNumber("SMart ROT", pidOutput);
 
-    double adjTranslation = ((DriveConstants.kMaxAngularSpeed-Math.abs(pidOutput))/DriveConstants.kMaxAngularSpeed)*0.60;
+    double adjTranslation = ((DriveConstants.kMaxAngularSpeed-Math.abs(pidOutput))/DriveConstants.kMaxAngularSpeed)*0.45+0.05;
 
     //SmartDashboard.putNumber("Target Angle", targetAngle);
     //SmartDashboard.putNumber("Current Angle", currentAngle);

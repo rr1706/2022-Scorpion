@@ -74,7 +74,7 @@ public class SmartFeed extends CommandBase {
         //SmartDashboard.putBooleanArray("Booleans", array);
 
         // if(!m_hasShot){
-            m_top.run(0.56);
+            m_top.run(0.60);
 /*             m_hasShot = true;
             m_shotTime = currentTime;
         }

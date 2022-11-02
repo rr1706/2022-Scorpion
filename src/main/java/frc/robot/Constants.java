@@ -97,7 +97,7 @@ public final class Constants {
   public static final class ModuleConstants {
     public static final double kTranslationRampRate = 3.0;          //Units of %power/s, ie 4.0 means it takes 0.25s to reach 100% power from 0%
     private static final double kTranslationGearRatio = 5.6111111; //Overall gear ratio of the swerve module
-    private static final double kWheelDiameter = 0.0777;           //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
+    private static final double kWheelDiameter = 0.0777*0.99;           //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
 
     public static final double kVelocityFactor = (1.0 / kTranslationGearRatio / 60.0) * kWheelDiameter * Math.PI; //Calculates the conversion factor of RPM of the translation motor to m/s at the floor
 
@@ -162,7 +162,9 @@ public final class Constants {
   } */
 
   public static final class ClimberConstants {
-    public static final int[] kMotorID = {15,9};
+    public static final int kMotorID = 10;
+    public static final double kMinPose = 0.0;
+    public static final double kMaxPose = 240.0;
     //public static final int[] kValvePorts = {4,5};
   }
 
@@ -187,7 +189,7 @@ public final class Constants {
     public static final double[] kPID = { 0.0001, 0.0005, 0 }; // Defines PID values for the shooter 0.00045
     public static final double kIntRange = 0.015;
     public static final double kStatic = 0.018;
-    public static final double kFF = 0.000162;
+    public static final double kFF = 0.000165;
     public static final double kAccelCompFactor = 0.100; // in units of seconds
     public static final double kMaxRPM = 3800.0;
     public static final double kMaxNegPower = -0.30;
@@ -198,15 +200,20 @@ public final class Constants {
       // (ty-angle,distance)
       new Point2D.Double(35, 0.0),
       new Point2D.Double(55, 0.0),
-      new Point2D.Double(89, 7.90), //
+      new Point2D.Double(90, 7.90), //
       new Point2D.Double(105, 13.5), //
-      new Point2D.Double(130, 17.5), //
-      new Point2D.Double(155, 21.0), //
-      new Point2D.Double(180, 24.0), //
-      new Point2D.Double(205, 28.5), //
-      new Point2D.Double(230, 34.1), //
-      new Point2D.Double(260, 35.7), //
-      new Point2D.Double(300, 39.0)
+      new Point2D.Double(120, 13.9), //
+      new Point2D.Double(135, 16.3), //
+      new Point2D.Double(150, 17.8), //
+      new Point2D.Double(165, 19.3), //
+      new Point2D.Double(180, 22.1), //
+      new Point2D.Double(195, 24.7), //
+      new Point2D.Double(210, 27.0),
+      new Point2D.Double(225, 30.4),
+      new Point2D.Double(240, 32.0),
+      new Point2D.Double(255, 32.7),
+      new Point2D.Double(270, 35.0),
+      new Point2D.Double(285, 36.1),
   };
 
     public static final LinearInterpolationTable khoodTable = new LinearInterpolationTable(kHoodPoints);
@@ -215,15 +222,20 @@ public final class Constants {
       // (ty-angle,distance)
       new Point2D.Double(35, 1700),
       new Point2D.Double(55, 2060),
-      new Point2D.Double(89, 2240), //
+      new Point2D.Double(90, 2240), //
       new Point2D.Double(105, 2310), //
-      new Point2D.Double(130, 2340), //
-      new Point2D.Double(155, 2465), //
-      new Point2D.Double(180, 2575), //
-      new Point2D.Double(205, 2730), //
-      new Point2D.Double(230, 2860), //
-      new Point2D.Double(260, 3050), //
-      new Point2D.Double(300, 3320)
+      new Point2D.Double(120, 2355), //
+      new Point2D.Double(135, 2405), //
+      new Point2D.Double(150, 2485), //
+      new Point2D.Double(165, 2550), //
+      new Point2D.Double(180, 2600), //
+      new Point2D.Double(195, 2680), //
+      new Point2D.Double(210, 2785),
+      new Point2D.Double(225, 2865),
+      new Point2D.Double(240, 2955),
+      new Point2D.Double(255, 3050),
+      new Point2D.Double(270, 3130),
+      new Point2D.Double(285, 3275)
 
   };
 
@@ -232,10 +244,10 @@ public final class Constants {
     private static final Point2D[] kShotTimes = new Point2D.Double[] {
       // (ty-angle,time)
       new Point2D.Double(80, 0.78+0.10),
-      new Point2D.Double(130, 0.80+0.10),
-      new Point2D.Double(190, 0.81+0.10),
-      new Point2D.Double(240, 0.82+0.10),
-      new Point2D.Double(280, 0.83+0.10)
+      new Point2D.Double(130, 0.80+0.15),
+      new Point2D.Double(190, 0.81+0.20),
+      new Point2D.Double(240, 0.82+0.20),
+      new Point2D.Double(280, 0.83+0.20)
   };
 
   public static final LinearInterpolationTable kTimeTable = new LinearInterpolationTable(kShotTimes);

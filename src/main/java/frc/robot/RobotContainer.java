@@ -18,16 +18,20 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Utilities.JoystickAnalogButton;
 import frc.robot.Utilities.JoystickAnalogButton.Side;
+import frc.robot.commands.ClimbFromFloor;
 import frc.robot.commands.DriveByController;
+import frc.robot.commands.ExtendClimber;
 import frc.robot.commands.IndexElevator;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.SimpleShooter;
 import frc.robot.commands.SmartFeed;
 import frc.robot.commands.SmartShooter;
+import frc.robot.commands.ZeroClimber;
 import frc.robot.commands.ZeroHood;
 import frc.robot.commands.Autos.fiveball;
 import frc.robot.commands.Autos.oneball;
 import frc.robot.commands.Autos.twoball;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -55,6 +59,7 @@ public class RobotContainer {
   private final Elevator m_elevator = new Elevator(ElevatorConstants.kLowMotorID, ElevatorConstants.kLowSensor, "Only");
   private final Shooter m_shooter = new Shooter(ShooterConstants.kMotorIDs);
   private final ShooterHood m_hood = new ShooterHood();
+  private final Climber m_climber = new Climber();
 
   private final DriveByController m_driveByController 
     = new DriveByController(m_drive, m_driverController);
@@ -63,13 +68,14 @@ public class RobotContainer {
   private final RunIntake m_runIntake = new RunIntake(m_intake);
   private final SmartFeed m_feed = new SmartFeed(m_elevator, m_drive, m_shooter, m_hood,m_operatorController);
 
-  private final SimpleShooter m_lowShoot = new SimpleShooter(m_shooter, m_hood, 1300, 25.0);
-  private final SimpleShooter m_medShoot = new SimpleShooter(m_shooter, m_hood, 1800, 30.0);
-  private final SimpleShooter m_highShoot = new SimpleShooter(m_shooter, m_hood, 3000, 35.0);
-  private final SimpleShooter m_ultraShoot = new SimpleShooter(m_shooter, m_hood, 3800, 39.0);
+  private final ExtendClimber m_extend = new ExtendClimber(m_climber);
+  private final ClimbFromFloor m_climb = new ClimbFromFloor(m_climber);
 
+  private final SimpleShooter m_defaultShoot = new SimpleShooter(m_shooter, 500);
 
-  private final Command m_test = new ZeroHood(m_hood, m_elevator);
+  private final SimpleShooter m_testModeShoot = new SimpleShooter(m_shooter, 0.0);
+  private final RunCommand m_stopIndex = new RunCommand(()->m_elevator.stop(), m_elevator);
+  private final Command m_test = new ZeroHood(m_hood).alongWith(new ZeroClimber(m_climber)).alongWith(m_stopIndex).alongWith(m_testModeShoot);
 
   private final Command m_autoFive = new fiveball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
   private final Command m_autoTwo = new twoball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
@@ -87,6 +93,7 @@ public class RobotContainer {
     m_drive.setDefaultCommand(m_driveByController);
     m_elevator.setDefaultCommand(m_Index);
     m_hood.setDefaultCommand(new RunCommand(() -> m_hood.run(1.0), m_hood));
+    m_shooter.setDefaultCommand(m_defaultShoot);
 
   }
 
@@ -104,10 +111,6 @@ public class RobotContainer {
     
 
     //new JoystickButton(m_driverController, Button.kY.value).whenPressed(()->m_drive.resetOdometry(new Pose2d(3.89,5.41, m_drive.getGyro().times(-1.0))));
-    new JoystickButton(m_driverController, Button.kX.value).whenHeld(m_lowShoot);
-    new JoystickButton(m_driverController, Button.kY.value).whenHeld(m_medShoot);
-    new JoystickButton(m_driverController, Button.kB.value).whenHeld(m_highShoot);
-    new JoystickButton(m_driverController, Button.kRightBumper.value).whenHeld(m_ultraShoot);
     new JoystickButton(m_driverController, Button.kA.value).whenHeld(m_smartShooter);
 
 
@@ -115,6 +118,8 @@ public class RobotContainer {
     new JoystickAnalogButton(m_driverController, Side.kRight).whenHeld(m_runIntake);
     new JoystickAnalogButton(m_driverController, Side.kLeft).whenHeld(m_feed);
    // new JoystickButton(m_driverController, Button.kX.value).whenHeld(m_feed);
+
+   new JoystickButton(m_operatorController, Button.kA.value).whenPressed(m_extend).whenReleased(m_climb);
 
   }
 

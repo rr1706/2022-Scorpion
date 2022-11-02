@@ -32,9 +32,13 @@ public class ShooterHood extends SubsystemBase {
         m_hoodMotor.setInverted(true);
         m_hoodEncoder.setPosition(0.0);
         m_hoodMotor.burnFlash();
+        SmartDashboard.putNumber("SetHoodAdjust", 0.0);
     }
 
     public void run(double angle) {
+        if(SmartDashboard.getBoolean("Adjust Shot?", true)){
+            angle = angle + SmartDashboard.getNumber("SetHoodAdjust", 0.0);
+        }
         setHoodAngle(angle);
         m_hoodPID.setReference(m_hoodAngle, ControlType.kPosition);
     }
@@ -49,7 +53,7 @@ public class ShooterHood extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //SmartDashboard.putNumber("Current Hood Angle", getHoodAngle());
+        SmartDashboard.putNumber("Current Hood Angle", getHoodAngle());
 
     }
 

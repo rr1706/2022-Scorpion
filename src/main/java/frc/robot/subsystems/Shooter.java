@@ -50,10 +50,16 @@ public class Shooter extends SubsystemBase {
         //m_PID.setIntegratorRange(0, 0);
 
         m_PID.setIntegratorRange(-ShooterConstants.kIntRange, ShooterConstants.kIntRange);
+        
+        SmartDashboard.putNumber("SetShotAdjust", 0);
+        SmartDashboard.putBoolean("Adjust Shot?", false);
 
     }
 
     public void run(double rpm) {
+        if(SmartDashboard.getBoolean("Adjust Shot?", true)){
+            rpm = rpm + SmartDashboard.getNumber("SetShotAdjust", 0.0);
+        }
         if (rpm >= ShooterConstants.kMaxRPM) {
             rpm = ShooterConstants.kMaxRPM;
         }
