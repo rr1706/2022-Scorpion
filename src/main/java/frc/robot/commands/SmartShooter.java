@@ -55,7 +55,7 @@ public class SmartShooter extends CommandBase {
         m_updatePose = updatePose;
         m_driver = new XboxController(4);
 
-        //m_rotPID.enableContinuousInput(0, 2*Math.PI);
+        m_rotPID.enableContinuousInput(0, 2*Math.PI);
         //m_rotPID.setIntegratorRange(-0.1, 0.1);
         addRequirements(shooter, hood, drive);
     }
