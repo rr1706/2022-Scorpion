@@ -1,11 +1,6 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ClimberConstants;
-import frc.robot.Constants.GlobalConstants;
 import frc.robot.subsystems.Climber;
 
 public class ClimbFromFloor extends CommandBase {

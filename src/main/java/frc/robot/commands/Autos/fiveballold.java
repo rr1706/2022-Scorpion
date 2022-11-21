@@ -14,9 +14,9 @@ import frc.robot.commands.SmartFeed;
 import frc.robot.subsystems.Swerve.Drivetrain;
 import frc.robot.subsystems.*;
 
-public class fiveball extends SequentialCommandGroup {
+public class fiveballold extends SequentialCommandGroup {
 
-    public fiveball(Drivetrain drive, Intake intake, Shooter shooter, ShooterHood hood, Elevator top, XboxController operator) {
+    public fiveballold(Drivetrain drive, Intake intake, Shooter shooter, ShooterHood hood, Elevator top, XboxController operator) {
 
         final AutoFromPathPlanner fiveballone = new AutoFromPathPlanner(drive, "5-ball-1", 2.5,true);
         final AutoFromPathPlanner fiveballtwo = new AutoFromPathPlanner(drive, "5-ball-2", 2.5, true);

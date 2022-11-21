@@ -28,9 +28,9 @@ import frc.robot.commands.SmartFeed;
 import frc.robot.commands.SmartShooter;
 import frc.robot.commands.ZeroClimber;
 import frc.robot.commands.ZeroHood;
-import frc.robot.commands.Autos.fiveball;
-import frc.robot.commands.Autos.oneball;
-import frc.robot.commands.Autos.twoball;
+import frc.robot.commands.Autos.fiveballold;
+import frc.robot.commands.Autos.oneballold;
+import frc.robot.commands.Autos.twoballold;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -77,9 +77,9 @@ public class RobotContainer {
   private final RunCommand m_stopIndex = new RunCommand(()->m_elevator.stop(), m_elevator);
   private final Command m_test = new ZeroHood(m_hood).alongWith(new ZeroClimber(m_climber)).alongWith(m_stopIndex).alongWith(m_testModeShoot);
 
-  private final Command m_autoFive = new fiveball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
-  private final Command m_autoTwo = new twoball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
-  private final Command m_autoOne = new oneball(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
+  private final Command m_autoFive = new fiveballold(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
+  private final Command m_autoTwo = new twoballold(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
+  private final Command m_autoOne = new oneballold(m_drive, m_intake, m_shooter, m_hood, m_elevator, m_operatorController);
   private final Command doNothin = new WaitCommand(20.0);
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
