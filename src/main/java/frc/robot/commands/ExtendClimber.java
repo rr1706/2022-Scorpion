@@ -15,7 +15,7 @@ public class ExtendClimber extends CommandBase {
 
     @Override
     public void initialize() {
-        m_climber.setDesiredPose(240.0);
+        m_climber.setDesiredPose(270.0);
     }
 
     @Override

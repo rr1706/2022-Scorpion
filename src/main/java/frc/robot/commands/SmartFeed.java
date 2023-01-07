@@ -73,20 +73,20 @@ public class SmartFeed extends CommandBase {
 
         //SmartDashboard.putBooleanArray("Booleans", array);
 
-        // if(!m_hasShot){
+         if(!m_hasShot){
             m_top.run(0.60);
-/*             m_hasShot = true;
+            m_hasShot = true;
             m_shotTime = currentTime;
         }
-        else if(m_hasShot && (currentTime - m_shotTime) < 0.100){
-            m_top.run(0.5);
+        else if(m_hasShot && (currentTime - m_shotTime) < 0.200){
+            m_top.run(0.60);
         }
-        else if(m_hasShot && (currentTime - m_shotTime) >= 0.250){
+        else if(m_hasShot && (currentTime - m_shotTime) >= 0.300){
             m_hasShot = false;
         }
-        else if(m_hasShot && (currentTime - m_shotTime) >= 0.100){
+        else if(m_hasShot && (currentTime - m_shotTime) >= 0.200){
             m_top.stop();
-        } */
+        } 
 
 
         //SmartDashboard.putBoolean("Shooting", true);

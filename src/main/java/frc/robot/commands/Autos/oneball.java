@@ -18,7 +18,7 @@ public class oneball extends SequentialCommandGroup {
 
     public oneball(Drivetrain drive, Intake intake, Shooter shooter, ShooterHood hood, Elevator top, XboxController operator) {
 
-        final AutoFromPathPlanner oneballone = new AutoFromPathPlanner(drive, "1-ball-1", 3.5, true);
+        final AutoFromPathPlanner oneballone = new AutoFromPathPlanner(drive, "1-ball-1", 1.5, true);
 
         final SmartShooter shoot = new SmartShooter(shooter, drive, hood, true);
 
@@ -28,7 +28,7 @@ public class oneball extends SequentialCommandGroup {
             new InstantCommand(() -> drive.resetOdometry(oneballone.getInitialPose())),
             
             oneballone,
-            shoot.raceWith(new WaitCommand(1.5).andThen(feed))
+            shoot.raceWith(new WaitCommand(3.0).andThen(feed))
         );
     }
 

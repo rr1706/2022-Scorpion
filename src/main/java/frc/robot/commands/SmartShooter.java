@@ -24,7 +24,7 @@ import frc.robot.subsystems.ShooterHood;
 
 public class SmartShooter extends CommandBase {
     private final PIDController m_rotPID 
-    = new PIDController(3.50, 0.0, 0.25);
+    = new PIDController(3.25, 0.0, 0.20);
     private final Shooter m_shooter;
     private final Drivetrain m_drive;
     private final ShooterHood m_hood;
@@ -55,7 +55,7 @@ public class SmartShooter extends CommandBase {
         m_updatePose = updatePose;
         m_driver = new XboxController(4);
 
-        //m_rotPID.enableContinuousInput(0, 2*Math.PI);
+        m_rotPID.enableContinuousInput(0, 2*Math.PI);
         //m_rotPID.setIntegratorRange(-0.1, 0.1);
         addRequirements(shooter, hood, drive);
     }
@@ -161,7 +161,7 @@ public class SmartShooter extends CommandBase {
 
     SmartDashboard.putNumber("SMart ROT", pidOutput);
 
-    double adjTranslation = ((DriveConstants.kMaxAngularSpeed-Math.abs(pidOutput))/DriveConstants.kMaxAngularSpeed)*0.45+0.05;
+    double adjTranslation = ((DriveConstants.kMaxAngularSpeed-Math.abs(pidOutput))/DriveConstants.kMaxAngularSpeed)*0.30+0.05;
 
     //SmartDashboard.putNumber("Target Angle", targetAngle);
     //SmartDashboard.putNumber("Current Angle", currentAngle);

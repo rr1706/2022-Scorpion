@@ -18,7 +18,7 @@ public class twoball extends SequentialCommandGroup {
 
     public twoball(Drivetrain drive, Intake intake, Shooter shooter, ShooterHood hood, Elevator top, XboxController operator) {
 
-        final AutoFromPathPlanner twoballone = new AutoFromPathPlanner(drive, "2-ball-1", 3.5, true);
+        final AutoFromPathPlanner twoballone = new AutoFromPathPlanner(drive, "2-ball-1", 1.5, true);
 
         final SmartShooter shoot = new SmartShooter(shooter, drive, hood, true);
 
@@ -28,7 +28,7 @@ public class twoball extends SequentialCommandGroup {
             new InstantCommand(() -> drive.resetOdometry(twoballone.getInitialPose())),
             
             twoballone.raceWith(new RunIntake(intake)),
-            shoot.raceWith(new WaitCommand(1.5).andThen(feed))
+            shoot.raceWith(new WaitCommand(3.0).andThen(feed))
         );
     }
 

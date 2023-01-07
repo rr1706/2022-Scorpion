@@ -97,7 +97,7 @@ public final class Constants {
   public static final class ModuleConstants {
     public static final double kTranslationRampRate = 3.0;          //Units of %power/s, ie 4.0 means it takes 0.25s to reach 100% power from 0%
     private static final double kTranslationGearRatio = 5.6111111; //Overall gear ratio of the swerve module
-    private static final double kWheelDiameter = 0.0777*0.99;           //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
+    private static final double kWheelDiameter = 0.0777*0.98;           //Wheel Diameter in meters, may need to be experimentally determined due to compliance of floor/tread material
 
     public static final double kVelocityFactor = (1.0 / kTranslationGearRatio / 60.0) * kWheelDiameter * Math.PI; //Calculates the conversion factor of RPM of the translation motor to m/s at the floor
 
@@ -164,7 +164,7 @@ public final class Constants {
   public static final class ClimberConstants {
     public static final int kMotorID = 10;
     public static final double kMinPose = 0.0;
-    public static final double kMaxPose = 240.0;
+    public static final double kMaxPose = 270.0;
     //public static final int[] kValvePorts = {4,5};
   }
 
@@ -204,8 +204,8 @@ public final class Constants {
       new Point2D.Double(105, 13.5), //
       new Point2D.Double(120, 13.9), //
       new Point2D.Double(135, 16.3), //
-      new Point2D.Double(150, 17.8), //
-      new Point2D.Double(165, 19.3), //
+      new Point2D.Double(150, 18.0), //
+      new Point2D.Double(165, 21.3), //
       new Point2D.Double(180, 22.1), //
       new Point2D.Double(195, 24.7), //
       new Point2D.Double(210, 27.0),
@@ -226,8 +226,8 @@ public final class Constants {
       new Point2D.Double(105, 2310), //
       new Point2D.Double(120, 2355), //
       new Point2D.Double(135, 2405), //
-      new Point2D.Double(150, 2485), //
-      new Point2D.Double(165, 2550), //
+      new Point2D.Double(150, 2490), //
+      new Point2D.Double(165, 2560), //
       new Point2D.Double(180, 2600), //
       new Point2D.Double(195, 2680), //
       new Point2D.Double(210, 2785),
